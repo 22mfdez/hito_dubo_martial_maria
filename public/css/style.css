@@ -1,0 +1,62 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+ @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee&family=DM+Sans:opsz,wght@9..40,200&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Karla&display=swap');
+
+ body{
+  font-family: 'Karla', sans-serif;
+ }
+  .fa {
+    color: #570c4a;
+  }
+
+  .icon-block {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .icon-block:hover {
+    transform: scale(1.05);
+  }
+
+  .card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }
+
+  
+ 
+  .btn-border-hover:hover {
+    border: 2px solid #570c4a;
+  }
+
+  .nav-wrapper.rounded-navbar {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .right.hide-on-med-and-down li {
+    font-size: 18px; /* Puedes ajustar este valor según tus preferencias */
+  }
+
+nav ul a {
+color:black
+}
+
+
+/* Estilo adicional si es necesario */
+#logoutButton {
+  margin-top: 10px;
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil de Usuario</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="css/style.css"> <!-- Incluye tu hoja de estilos principal aquí -->
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: rgb(78, 76, 175);
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .container {
+      margin-top: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #3b156d;
+    }
+
+    .card-content {
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .btn-confirmar {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .btn-rechazar {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .estado-asistencia {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .estado-confirmado {
+      color: #4caf50;
+    }
+
+    .estado-rechazado {
+      color: #f44336;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>Perfil de Usuario</h2>
+  </header>
+
+  <div class="container">
+    <!-- Información del usuario -->
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Información del Usuario</span>
+        <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
+        <p><strong>Email:</strong> <span id="emailUsuario"></span></p>
+        <!-- Otros campos de información del usuario que puedas tener -->
+      </div>
+    </div>
+
+    <!-- Entrenamientos Matriculados -->
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Entrenamientos Matriculados</span>
+    <ul id="matriculaciones-list" class="collection">
+      <!-- Aquí se mostrarán las matriculaciones -->
+    </ul>
+  </div>
+</div>
+
+    <!-- Historial de Asistencias -->
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Historial de Asistencias</span>
+        <div class="entrenamiento-card">
+          <p><strong>Entrenamiento Anterior</strong></p>
+          <p>Fecha: [Fecha del entrenamiento]</p>
+          <p class="estado-asistencia estado-confirmado">Estado: Confirmado</p>
+        </div>
+        <!-- Repite esta estructura para más entrenamientos anteriores -->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="js/script.js"></script>
+
+  <script>
+    function agregarMatriculacion(id, name) {
+    const matriculacionesList = document.getElementById('matriculaciones-list');
+    const listItem = document.createElement('li');
+    listItem.className = 'collection-item';
+    listItem.innerHTML = `
+      <span>${name}</span>
+      <button class="btn btn-confirmar" onclick="confirmarAsistencia('${id}')">Confirmar</button>
+      <button class="btn btn-rechazar" onclick="rechazarAsistencia('${id}')">Rechazar</button>
+    `;
+    matriculacionesList.appendChild(listItem);
+  }
+  const userInfo = {
+    username: "carlita", // Reemplaza con el nombre real del usuario
+    email: "carla@gmail.com", // Reemplaza con el correo real del usuario
+    // Otros campos de información del usuario que puedas tener
+  };
+
+  // Actualizar el HTML con la información del usuario
+  document.getElementById('nombreUsuario').innerText = userInfo.username;
+  document.getElementById('emailUsuario').innerText = userInfo.email;
+  // Actualiza otros campos según sea necesario
+  // Función para confirmar asistencia
+  function confirmarAsistencia(id) {
+    // Puedes implementar lógica para confirmar la asistencia
+    console.log(`Confirmar asistencia para la clase con ID ${id}`);
+  }
+
+  // Función para rechazar asistencia
+  function rechazarAsistencia(id) {
+    // Puedes implementar lógica para rechazar la asistencia
+    console.log(`Rechazar asistencia para la clase con ID ${id}`);
+  }
+
+  // Mostrar matriculaciones al cargar la página (puedes cargarlas desde el servidor si es necesario)
+  document.addEventListener('DOMContentLoaded', function () {
+    matriculaciones.forEach(matriculacion => {
+      agregarMatriculacion(matriculacion.id, matriculacion.name);
+    });
+  
+  });
+  </script>
+</body>
+
+</html>
