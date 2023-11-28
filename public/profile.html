@@ -6,21 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil de Usuario</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="css/style.css"> <!-- Incluye tu hoja de estilos principal aquí -->
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Karla&display=swap');
+
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'Karla', sans-serif;
       background-color: #f5f5f5;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: rgb(78, 76, 175);
-      color: white;
+      background-color: #37474f;
+      color: #ffffff;
       text-align: center;
       padding: 10px;
+      margin-bottom: 20px;
     }
 
     .container {
@@ -73,54 +75,110 @@
       color: #f44336;
     }
 
-    .clase-display{
-    display: block;
-  }
+    .clase-display {
+      display: block;
+    }
+
+    .confirmar-btn {
+      margin-left: 10px;
+    }
+
+    footer {
+      background-color: #37474f;
+      color: #ffffff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .containerfoot {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    ul.collection {
+      border: none;
+      padding: 0;
+    }
+
+    ul.collection-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      background-color: #eeeeee;
+    }
   </style>
 </head>
 
 <body>
+  <!-- Barra de Navegación -->
+  <nav class="red darken-1">
+    <div class="nav-wrapper container rounded-navbar" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)">
+      <a href="index.html" class="brand-logo">Dubo</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="panel.html">Clases</a></li>
+        <li><a href="#">Contáctanos</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <header>
     <h2>Perfil de Usuario</h2>
   </header>
 
+  <!-- Entrenamientos Matriculados -->
   <div class="container">
-    <!-- Información del usuario -->
     <div class="card">
       <div class="card-content">
-        <span class="card-title">Información del Usuario</span>
-        <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
-        <p><strong>Email:</strong> <span id="emailUsuario"></span></p>
+        <span class="card-title">Entrenamientos Matriculados</span>
+        <ul class="collection" id="lista_clases"></ul>
+      </div>
     </div>
-
-    <!-- Entrenamientos Matriculados -->
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">Entrenamientos Matriculados</span>
-    <ul id="lista_clases"></ul>
-  </div>
-</div>
 
     <!-- Historial de Asistencias -->
     <div class="card">
       <div class="card-content">
         <span class="card-title">Historial de Asistencias</span>
-        <div class="entrenamiento-card">
-          <p><strong>Entrenamiento Anterior</strong></p>
-          <p>Fecha: [Fecha del entrenamiento]</p>
-          <p class="estado-asistencia estado-confirmado">Estado: Confirmado</p>
-        </div>
-        <!-- Repite esta estructura para más entrenamientos anteriores -->
+        <ul class="collection" id="historial_asistencias"></ul>
       </div>
     </div>
   </div>
+
+  <footer class="page-footer red darken-2">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Contacto</h5>
+          <p class="grey-text text-lighten-4">Puedes ponerte en contacto con nosotros a través de:</p>
+          <p class="grey-text text-lighten-4">Correo electrónico: info@gimnasioxyz.com</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Redes Sociales</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Twitter</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="red darken-3">
+      <div class="containerfoot">
+        © 2023 Gimnasio XYZ
+        <a class="grey-text text-lighten-4 center" href="#!">Política de Privacidad</a>
+      </div>
+    </div>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
   <script>
-    // Función para leer cookies
+  // Función para leer cookies
   function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
@@ -138,6 +196,8 @@
 
   // Obtener la lista de clases matriculadas
   const listaClases = document.getElementById('lista_clases');
+  // Obtener el historial de asistencias
+  const historialAsistencias = document.getElementById('historial_asistencias');
 
   if (cookieValue) {
     try {
@@ -147,15 +207,56 @@
       // Mostrar cada clase en la lista
       clases.forEach(clase => {
         const listItem = document.createElement('li');
+        listItem.className = 'collection-item';
         listItem.textContent = clase;
+
+        // Agregar botón de confirmar
+        const confirmarBtn = document.createElement('a');
+        confirmarBtn.className = 'btn confirmar-btn';
+        confirmarBtn.textContent = 'Confirmar';
+        confirmarBtn.addEventListener('click', () => confirmarAsistencia(clase, listItem));
+        listItem.appendChild(confirmarBtn);
+
+        // Agregar botón de denegar
+        const denegarBtn = document.createElement('a');
+        denegarBtn.className = 'btn denegar-btn';
+        denegarBtn.textContent = 'Denegar';
+        denegarBtn.addEventListener('click', () => denegarAsistencia(clase, listItem));
+        listItem.appendChild(denegarBtn);
+
         listaClases.appendChild(listItem);
       });
     } catch (error) {
       console.error('Error al analizar la cookie como JSON:', error);
     }
   }
+
+  // Función para confirmar asistencia
+  function confirmarAsistencia(clase, listItem) {
+    // Mover la clase confirmada al historial
+    const historialItem = document.createElement('li');
+    historialItem.className = 'collection-item';
+    historialItem.textContent = clase + ' - Pendiente de Asistencia';
+    historialAsistencias.appendChild(historialItem);
+
+    // Puedes implementar aquí la lógica para confirmar la asistencia
+    console.log(`Asistencia confirmada para la clase: ${clase}`);
+
+    // Eliminar la clase de la lista de clases matriculadas
+    listaClases.removeChild(listItem);
+  }
+
+  // Función para denegar asistencia
+  function denegarAsistencia(clase, listItem) {
+    // Puedes implementar aquí la lógica para denegar la asistencia
+    console.log(`Asistencia denegada para la clase: ${clase}`);
+
+    // Eliminar la clase de la lista de clases matriculadas
+    listaClases.removeChild(listItem);
+  }
   </script>
   
+
 </body>
 
 </html>
