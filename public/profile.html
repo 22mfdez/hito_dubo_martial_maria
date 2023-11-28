@@ -72,6 +72,10 @@
     .estado-rechazado {
       color: #f44336;
     }
+
+    .clase-display{
+    display: block;
+  }
   </style>
 </head>
 
@@ -88,17 +92,13 @@
         <span class="card-title">Información del Usuario</span>
         <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
         <p><strong>Email:</strong> <span id="emailUsuario"></span></p>
-        <!-- Otros campos de información del usuario que puedas tener -->
-      </div>
     </div>
 
     <!-- Entrenamientos Matriculados -->
 <div class="card">
   <div class="card-content">
     <span class="card-title">Entrenamientos Matriculados</span>
-    <ul id="matriculaciones-list" class="collection">
-      <!-- Aquí se mostrarán las matriculaciones -->
-    </ul>
+    <ul id="lista_clases"></ul>
   </div>
 </div>
 
@@ -118,50 +118,44 @@
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="js/script.js"></script>
 
   <script>
-    function agregarMatriculacion(id, name) {
-    const matriculacionesList = document.getElementById('matriculaciones-list');
-    const listItem = document.createElement('li');
-    listItem.className = 'collection-item';
-    listItem.innerHTML = `
-      <span>${name}</span>
-      <button class="btn btn-confirmar" onclick="confirmarAsistencia('${id}')">Confirmar</button>
-      <button class="btn btn-rechazar" onclick="rechazarAsistencia('${id}')">Rechazar</button>
-    `;
-    matriculacionesList.appendChild(listItem);
-  }
-  const userInfo = {
-    username: "carlita", // Reemplaza con el nombre real del usuario
-    email: "carla@gmail.com", // Reemplaza con el correo real del usuario
-    // Otros campos de información del usuario que puedas tener
-  };
-
-  // Actualizar el HTML con la información del usuario
-  document.getElementById('nombreUsuario').innerText = userInfo.username;
-  document.getElementById('emailUsuario').innerText = userInfo.email;
-  // Actualiza otros campos según sea necesario
-  // Función para confirmar asistencia
-  function confirmarAsistencia(id) {
-    // Puedes implementar lógica para confirmar la asistencia
-    console.log(`Confirmar asistencia para la clase con ID ${id}`);
+    // Función para leer cookies
+  function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + '=')) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
   }
 
-  // Función para rechazar asistencia
-  function rechazarAsistencia(id) {
-    // Puedes implementar lógica para rechazar la asistencia
-    console.log(`Rechazar asistencia para la clase con ID ${id}`);
-  }
+  // Obtener el valor de la cookie
+  const cookieValue = getCookie('clases');
+  console.log(cookieValue);
 
-  // Mostrar matriculaciones al cargar la página (puedes cargarlas desde el servidor si es necesario)
-  document.addEventListener('DOMContentLoaded', function () {
-    matriculaciones.forEach(matriculacion => {
-      agregarMatriculacion(matriculacion.id, matriculacion.name);
-    });
-  
-  });
+  // Obtener la lista de clases matriculadas
+  const listaClases = document.getElementById('lista_clases');
+
+  if (cookieValue) {
+    try {
+      // Intenta analizar la cadena JSON
+      const clases = JSON.parse(cookieValue);
+
+      // Mostrar cada clase en la lista
+      clases.forEach(clase => {
+        const listItem = document.createElement('li');
+        listItem.textContent = clase;
+        listaClases.appendChild(listItem);
+      });
+    } catch (error) {
+      console.error('Error al analizar la cookie como JSON:', error);
+    }
+  }
   </script>
+  
 </body>
 
 </html>
